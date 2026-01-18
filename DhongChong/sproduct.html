@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css"> </head>
+</head>
+    <body>
+    <div id="preloader">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <h2>TryAngle Shop</h2>
+            <div class="load-text"><span id="load-percentage">0</span>%</div>
+            <div class="progress-bar-container">
+                <div id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <section id="header">   
+        <div class="logo-container">
+        <a href="index.html"><img src="img/logo/final-logo.png" class="logo" alt="TryAngle"> </a>
+        </div>
+        <div>
+            <ul id="navbar">
+                <i id="close" class="fas fa-times"></i>
+
+                <li><a class="active" href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="offer.html">Offer</a></li>
+                <li>
+                    <a href="cart.html">
+                        <i class="fa-solid fa-bag-shopping">
+                        </i>
+                        <span id="cart-count">0</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div id="mobile">
+            <a href="cart.html">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span id="mobile-cart-count">0</span>
+            </a>
+            <i id="bar" class="fas fa-outdent"></i>
+        </div>
+    </section>
+        
+    <section class="pro-wrapper">
+        <div id="prodetails" class="section-p1 ">
+            <div class="single-pro-image">
+                <div id="img-zoom-container" class="zoom-container">
+                    <img src="" width="100%" id="MainImg" alt="">
+                </div>
+                
+                <div class="small-img-group">
+                    </div>
+            </div>
+
+            <div class="single-pro-details">
+                <h6>Home / <span id="pro-cat">Category</span></h6>
+                <h4 id="pro-name">Product Name</h4>
+                <h2 id="pro-price">৳ 0.00</h2>
+                
+                <div class="purchase-info">
+                    <input type="number" value="1" min="1" id="pro-quantity">
+                    <button class="normal add-btn" onclick="addToCartFromSingle()">
+                        <i class="fas fa-shopping-cart"></i> Add To Cart
+                    </button>
+                </div>
+
+                <div class="share-container">
+                    <span>শেয়ার করুন:</span>
+                    <div class="share-icons">
+                        <a id="fb-share" href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a id="wa-share" href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a id="copy-link" href="javascript:void(0)" onclick="copyToClipboard()"><i class="fas fa-link"></i></a>
+                    </div>
+                </div>
+
+                <h4>Product Details</h4>
+                <span id="pro-desc">
+                </span>
+                <div class="shop-back-container">
+                    <button class="normal back-to-shop-btn" onclick="window.location.href='shop.html'">
+                        <i class="fas fa-arrow-left"></i> আরও পণ্য দেখুন (Continue Shopping)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="product1" class="section-p1">
+        <h2>Related Products</h2>
+        <div id="related-pro-container" class="pro-container">
+                
+        </div>
+    </section>
+    
+    <section id="recent-view-section" class="section-p1">
+        <div class="container-recent"> <h2>Based on your interest</h2>
+            <div id="recent-view-grid" class="pro-container">
+                <div id="recent-empty-msg" class="empty-state">
+                    <i class="fas fa-eye-slash"></i>
+                    <p>আপনি এখনো কোনো পণ্য দেখেননি। আমাদের শপ ঘুরে দেখুন!</p>
+                    <a href="shop.html" class="normal">পণ্য দেখতে এখানে ক্লিক করুন</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="quickview-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeQuickView()">&times;</span>
+            <div class="modal-body">
+                <div class="modal-img">
+                    <img id="qv-image" src="" alt="">
+                </div>
+                <div class="modal-details">
+                    <h2 id="qv-name"></h2>
+                    <h3 id="qv-price"></h3>
+                    <p id="qv-desc">আমাদের এই প্রিমিয়াম কোয়ালিটি প্রোডাক্টটি আপনার দৈনন্দিন ফ্যাশনে আভিজাত্য যোগ করবে। এটি টেকসই এবং আরামদায়ক।</p>
+                    <div class="qv-actions">
+                        <input type="number" id="qv-quantity" value="1" min="1">
+                        <button id="qv-add-btn" class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="section-p1">
+        <div class="footer-container">
+            <div class="col">
+                <h4>Information</h4>
+                <a href="about.html">About Us</a>
+                <a href="delivery.html">Delivery Information</a>
+                <a href="privacy.html">Privacy Policy</a>
+            </div>
+
+            <div class="col">
+                <h4>Customer Service</h4>
+                <a href="return.html">Return Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+
+            <div class="col">
+                <h4>Address</h4>
+                <p><i class="fa-solid fa-location-dot"></i> Kilikhet amtola, Khilkhet, Dhaka 1229</p>
+                <p><i class="fa-solid fa-envelope"></i> TryAngle@gmail.com</p>
+                <p><i class="fa-solid fa-phone"></i> 01928194590</p>
+            </div>
+        </div>
+
+        <div class="social-container">
+            <div class="social-icons">
+                <a href="https://facebook.com/yourpage" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://m.me/yourpage" target="_blank"><i class="fa-brands fa-facebook-messenger"></i></a>
+                <a href="https://wa.me/8801928194590" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="https://youtube.com/yourchannel" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+            <div class="copyright">
+                <p>Copyright © 2025 . All Rights Reserved. | Design by <strong>TryAngle</strong>.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="chat-container">
+        <div class="chat-options" id="chatOptions">
+            <a href="https://wa.me/8801928194590" target="_blank" class="chat-btn whatsapp-chat">
+                <i class="fab fa-whatsapp"></i>
+                <span class="tooltip">WhatsApp</span>
+            </a>
+            <a href="https://m.me/YOUR_PAGE_USERNAME" target="_blank" class="chat-btn messenger-chat">
+                <i class="fab fa-facebook-messenger"></i>
+                <span class="tooltip">Messenger</span>
+            </a>
+        </div>
+        <button class="chat-toggle" onclick="toggleChat()">
+            <i class="fas fa-headset" id="chatIcon"></i>
+        </button>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script src="database_script.js"></script>
+    <script src="common_script.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+        // নিশ্চিত করা হচ্ছে যে পুরো পেজ (HTML) লোড হওয়ার পর কোড চলবে
+        document.addEventListener("DOMContentLoaded", () => {
+            // ১. প্রোডাক্ট লোড হবে
+            loadSingleProduct(); 
+            
+            // ২. URL থেকে আইডি নিয়ে সেটাকে 'Recently Viewed' এ সেভ করবে
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            
+            if (productId) {
+                // saveToRecentlyViewed ফাংশনটি যদি তোমার অন্য ফাইলে থাকে তবেই এটি কাজ করবে
+                if (typeof saveToRecentlyViewed === "function") {
+                    saveToRecentlyViewed(productId);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
