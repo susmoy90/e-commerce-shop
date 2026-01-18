@@ -255,13 +255,12 @@
                 .then(response => {
                     console.log("Data sent successfully!");
                     
-                    // ১. অর্ডার সফল হলে কার্ট খালি করো
-                    localStorage.removeItem('cart'); 
 
                     // ২. কুপন এবং ডিসকাউন্ট ডাটাও এখান থেকেই মুছে ফেলো (নতুন যোগ করা হলো)
-                    localStorage.removeItem('savedDiscount');      // ডিসকাউন্ট পার্সেন্টেজ মুছে ফেলবে
-                    localStorage.removeItem('savedCouponCode');    // কুপন কোড মুছে ফেলবে
-                    localStorage.removeItem('lastDiscountAmount'); // টাকার পরিমাণ মুছে ফেলবে
+                    localStorage.removeItem('cart'); 
+                    localStorage.removeItem('savedDiscount');      
+                    localStorage.removeItem('savedCouponCode');    
+                    localStorage.removeItem('lastDiscountAmount'); 
                 })
                 .catch(error => {
                     console.error('Error!', error.message);
@@ -333,6 +332,17 @@
                 window.location.reload();
             }
         });
+        window.onload = function() {
+        // মেমো পেজ লোড হওয়ার ২ সেকেন্ড পর কার্ট ক্লিয়ার হবে
+            setTimeout(() => {
+                if(localStorage.getItem('cart')) {
+                    localStorage.removeItem('cart');
+                    localStorage.removeItem('savedDiscount');
+                    localStorage.removeItem('savedCouponCode');
+                    console.log("Cart cleaned successfully!");
+                }
+            }, 2000); 
+        };
     </script>
 </body>
 </html>

@@ -820,11 +820,12 @@ if (checkoutBtn) {
             return;
         }
 
-        // গিফট বক্স খেলার সুযোগ আবার ওপেন করে দেওয়া (অর্ডার করলে আবার খেলতে পারবে)
+        // গিফট বক্স খেলার সুযোগ আবার ওপেন করে দেওয়া
         localStorage.removeItem("hasPlayed");
 
         const now = new Date();
-        const currentMonthYear = now.getFullYear().toString().slice(-2) + (now.getMonth() + 1).toString().padStart(2, '0');
+        const currentMonthYear = now.getFullYear().toString().slice(-2) + 
+                                 (now.getMonth() + 1).toString().padStart(2, '0');
 
         let lastMonthYear = localStorage.getItem('lastOrderMonthYear');
         let lastOrderNum = localStorage.getItem('orderCounter') || 1000;
@@ -842,6 +843,7 @@ if (checkoutBtn) {
         
         const invoiceID = `INV-${currentMonthYear}-${nextOrderNum}`;
 
+        // ১. মেমো পেজের জন্য প্রয়োজনীয় সব তথ্য সেভ করা
         localStorage.setItem('lastInvoiceID', invoiceID);
         localStorage.setItem('lastOrderCustomer', JSON.stringify({ 
             name: name, 
@@ -851,18 +853,19 @@ if (checkoutBtn) {
         }));
         localStorage.setItem('lastShippingCharge', shipping);
 
-        // --- কার্ট ক্লিয়ার করার জাদুকরী অংশ ---
-        localStorage.removeItem('cart'); 
-        localStorage.removeItem('savedDiscount'); 
-        localStorage.removeItem('savedCouponCode');
-        
-        // গ্লোবাল ভ্যারিয়েবল রিসেট (যাতে মেমোরিতেও জমানো না থাকে)
-        if(typeof currentDiscountPercent !== 'undefined') currentDiscountPercent = 0;
+        // ২. ডিসকাউন্ট এর টাকার পরিমাণ সেভ করা (৳ চিহ্ন বাদ দিয়ে শুধু নাম্বার)
+        let discountElem = document.getElementById('discount-amount') || document.getElementById('cart-discount');
+        let finalDiscount = "0";
+        if (discountElem) {
+            finalDiscount = discountElem.innerText.replace(/[^\d.-]/g, ''); // শুধু নাম্বার রাখার জন্য
+        }
+        localStorage.setItem('lastDiscountAmount', finalDiscount);
 
-        // ৩. ফাইনালি মেমো পেজে পাঠানো
+        // ৩. সরাসরি মেমো পেজে পাঠিয়ে দিন (কার্ট এখন মুছবেন না, মেমো পেজ মুছবে)
         window.location.href = "memo.html"; 
     });
 }
+
 
 function sendToSheet(orderData) {
     const url = 'https://script.google.com/macros/s/AKfycbzmZ3_Auz45t44i2aiX6wPeVYVKSeeGT6GW9jFjcyBQkzHF6Z6WyDbTR6kGWdYTbjHlHA/exec'; // তোমার গুগল স্ক্রিপ্ট থেকে পাওয়া URL টি এখানে বসাও
