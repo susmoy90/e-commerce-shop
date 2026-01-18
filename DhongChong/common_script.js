@@ -803,12 +803,10 @@ const checkoutBtn = document.querySelector("#subtotal button");
 
 if (checkoutBtn) {
     checkoutBtn.addEventListener("click", function() {
-        // --- তোমার হুবহু আগের কোড ---
         let nameField = document.getElementById("cust-name");
         let phoneField = document.getElementById("cust-phone");
         let addressField = document.getElementById("cust-address");
 
-        // চেকআউট পেজে এই ইনপুটগুলো না থাকলে যেন কোড না থামে
         if (!nameField || !phoneField || !addressField) return;
 
         let name = nameField.value.trim();
@@ -822,21 +820,23 @@ if (checkoutBtn) {
             return;
         }
 
+        // গিফট বক্স খেলার সুযোগ আবার ওপেন করে দেওয়া (অর্ডার করলে আবার খেলতে পারবে)
         localStorage.removeItem("hasPlayed");
 
         const now = new Date();
-        const currentMonthYear = now.getFullYear().toString().slice(-2) + 
-                                 (now.getMonth() + 1).toString().padStart(2, '0');
+        const currentMonthYear = now.getFullYear().toString().slice(-2) + (now.getMonth() + 1).toString().padStart(2, '0');
 
         let lastMonthYear = localStorage.getItem('lastOrderMonthYear');
-        let lastOrderNum = localStorage.getItem('orderCounter');
+        let lastOrderNum = localStorage.getItem('orderCounter') || 1000;
 
+        // মাস পরিবর্তন হলে কাউন্টার রিসেট করা
         if (lastMonthYear !== currentMonthYear) {
             lastOrderNum = 1000; 
-            localStorage.setItem('lastMonthYear', currentMonthYear);
         }
         
         let nextOrderNum = parseInt(lastOrderNum) + 1;
+        
+        // নতুন অর্ডারের তথ্য সেভ করা
         localStorage.setItem('orderCounter', nextOrderNum); 
         localStorage.setItem('lastOrderMonthYear', currentMonthYear);
         
@@ -851,6 +851,15 @@ if (checkoutBtn) {
         }));
         localStorage.setItem('lastShippingCharge', shipping);
 
+        // --- কার্ট ক্লিয়ার করার জাদুকরী অংশ ---
+        localStorage.removeItem('cart'); 
+        localStorage.removeItem('savedDiscount'); 
+        localStorage.removeItem('savedCouponCode');
+        
+        // গ্লোবাল ভ্যারিয়েবল রিসেট (যাতে মেমোরিতেও জমানো না থাকে)
+        if(typeof currentDiscountPercent !== 'undefined') currentDiscountPercent = 0;
+
+        // ৩. ফাইনালি মেমো পেজে পাঠানো
         window.location.href = "memo.html"; 
     });
 }
