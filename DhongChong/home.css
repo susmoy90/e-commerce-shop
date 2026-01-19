@@ -117,8 +117,8 @@
     width: 100%;       /* লেখার সমান পুরোটা হবে */
     height: 3px;
     background: #6a2aab; /* তোমার বর্তমান কালার */
-    transform: none;   /* এবার আর ট্রান্সফর্ম লাগবে না */
 }
+
 /* গ্রিড লেআউট - ডেক্সটপে ৪টি করে */
 .category-grid {
     display: grid;
@@ -161,7 +161,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: 0.5s;
+    transition: 0.2s;
 }
 /* ক্যাটাগরির নাম */
 .cat-card h3 {
@@ -172,18 +172,11 @@
     transition: 0.3s;
 }
 
+
 .cat-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 10px 25px rgba(106, 42, 171, 0.15); /* তোমার থিম কালারের শ্যাডো */
     border-color: #6a2aab;
-}
-.cat-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin-bottom: 15px;
-    background: #fdfbff;
 }
 
 .cat-card:hover img {
@@ -350,7 +343,7 @@
     }
 }
                 /*featured product design*/
-#product1 {
+#product1, .categories-section, #recent-view-section {
     text-align: center;
 }
 #product1 p {
@@ -358,11 +351,15 @@
     color: #2e2e2e;
     margin: 15px 0 20px 0;
 }
+#product1 h2.home-title {
+    width: auto !important; /* width: 100% থাকলে সেটি বাতিল করে দিবে */
+    display: inline-block !important;
+}
 
 
 
                                                                         /* --- Trust Signals Section --- */
-/* --- Trust Signals Section --- */
+
 .trust-signals {
     margin: 40px 0;
     padding: 0;
