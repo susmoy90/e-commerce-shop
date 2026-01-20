@@ -439,7 +439,135 @@ const allProducts = [
     
 
 
+    { 
+        id: 6000, 
+        category: "cosmetics", 
+        name: "Beauty glazed color twist eyeshadow palette", 
+        price: 799,
+        best: true,
+        featured: true,
+        discount: 0, // 0% ছাড়ের জন্য 
+        image: "product/cosmetics/Beauty glazed color twist eyeshadow palette/primary.webp", 
+        stars: 5,
+        description: `Product Overview:
+        আপনার চোখের সাজকে শিল্পের পর্যায়ে নিয়ে যেতে Beauty Glazed নিয়ে এলো 'Color Twist' আইশ্যাডো প্যালেট। এই একটি প্যালেটেই আপনি পাচ্ছেন ৬৪টি ভিন্ন শেড, যা আপনার গ্ল্যামারাস, ক্যাজুয়াল বা যেকোনো সৃজনশীল আইলুক তৈরির জন্য যথেষ্ট। এর সিল্কি টেক্সচার এবং হাইলি পিগমেন্টেড কালার আপনার মেকআপকে দেবে এক অনন্য মাত্রা।
+
+        - ৬৪টি ভাইব্রেন্ট শেড: ইয়েলো, অরেঞ্জ, পিঙ্ক, পার্পল থেকে শুরু করে ব্লু, গ্রিন ও রেড—সব কালারের মেট, শিমার এবং গ্লিটার ফিনিশ।
+        - প্রিমিয়াম টেক্সচার: ভেলভেটি শেডগুলো জেলের মতো সহজে ব্লেন্ড হয় এবং পাউডারের মতো দীর্ঘস্থায়ী ফিনিশ দেয়।
+        - স্পেশাল সিল্ক স্লিপ টপার: বাড়তি গ্ল্যামার যোগ করতে এতে রয়েছে ব্র্যান্ড নিউ সিল্ক স্লিপ টপার, যা হাইলাইট বা স্পার্কল ইফেক্টের জন্য দুর্দান্ত।
+        - লং-লাস্টিং ও ওয়াটারপ্রুফ: দীর্ঘ সময় স্থায়ী হয়, সহজে ফ্যাকাশে হয় না এবং কোনো হেভি ফলআউট (Fallout) নেই।
+        - নিরাপদ ও স্কিন ফ্রেন্ডলি: সব ধরণের স্কিন টোনের জন্য উপযোগী এবং নিরাপদ উপকরণ দিয়ে তৈরি।
+
+        Care Instructions: 
+        ১. ব্যবহারের পর প্যালেটটি ভালোভাবে বন্ধ করে রাখুন যাতে আর্দ্রতা না ঢোকে।
+        ২. সরাসরি সূর্যালোক থেকে দূরে ঠান্ডা ও শুষ্ক জায়গায় সংরক্ষণ করুন।
+
+        Technical Details:
+           - Weight: 270g.
+           - Shelf Life: 3 Years.
+           - Finish: Matte, Sheen, Shimmer, and Glitter.
+           - Package Includes: 1 x Beauty Glazed Color Twist 64 colors eyeshadow palette.
+        `,
+
+        images: [
+        "product/cosmetics/Beauty glazed color twist eyeshadow palette/01.webp",
+        "product/cosmetics/Beauty glazed color twist eyeshadow palette/02.webp",
+        "product/cosmetics/Beauty glazed color twist eyeshadow palette/03.webp",
+        "product/cosmetics/Beauty glazed color twist eyeshadow palette/04.webp"
+        ],
+        stock: true
+
+    },
+
+
+
+
+
+
+    { 
+        id: 7000, 
+        category: "jewellery", 
+        name: "Hengfang Eyeliner", 
+        price: 399,
+        best: true,
+        featured: true,
+        discount: 0, // 0% ছাড়ের জন্য 
+        image: "product/jewellery/Hengfang Eyeliner/main.webp", 
+        stars: 4,
+        description: `Product Overview:
+        নিখুঁত এবং আকর্ষণীয় আই-লুক পেতে Hengfang Eyeliner হতে পারে আপনার প্রতিদিনের মেকআপের অন্যতম সঙ্গী। এর স্মুদ অ্যাপ্লিকেশন এবং ডার্ক ব্ল্যাক ফিনিশ আপনার চোখকে দেবে এক বোল্ড এবং ডিফাইনড লুক। আপনি উইংড লাইনার পছন্দ করেন বা সিম্পল চিকন লাইন—সবকিছুই এখন হবে আরও সহজ।
+
+        - Intense Black Pigment: এর ঘন কালো রঙ এক টানেই চোখে ফুটিয়ে তোলে গভীর আভিজাত্য।
+        - Waterproof & Smudge-proof: ঘাম বা পানিতে সহজে মুছে যাবে না, তাই সারাদিন থাকবে একদম নিখুঁত।
+        - Fine Precision Tip: এর সূক্ষ্ম টিপ বা নিব দিয়ে খুব সহজেই নিখুঁত লাইন ড্র করা যায়।
+        - Fast Drying Formula: ব্যবহারের সাথে সাথেই শুকিয়ে যায়, তাই ছড়িয়ে যাওয়ার ভয় নেই।
+        - Long-Lasting Wear: দীর্ঘ সময় স্থায়ী হয়, যা আপনাকে সকাল থেকে রাত পর্যন্ত কনফিডেন্ট রাখবে।
+
+        Care Instructions: 
+        ১. ব্যবহারের পর ক্যাপটি শক্ত করে আটকে রাখুন যাতে লাইনার শুকিয়ে না যায়।
+        ২. ব্যবহারের আগে হালকা ঝাকিয়ে নিতে পারেন যাতে কালার আউটপুট ভালো আসে।
+        ৩. চোখের ভেতরে সরাসরি ব্যবহার করা থেকে বিরত থাকুন।
+
+        Technical Details:
+           - Type: Liquid/Pen Eyeliner.
+           - Color: Deep Black.
+           - Weight: 10g-15g (Approx).
+           - Shelf Life: 3 Years.
+           - Suitability: সব ধরণের স্কিন এবং চোখের জন্য উপযোগী।
+        `,
+
+        images: [
+        "product/jewellery/Hengfang Eyeliner/1.webp",
+        "product/jewellery/Hengfang Eyeliner/2.webp",
+        "product/jewellery/Hengfang Eyeliner/3.webp",
+        "product/jewellery/Hengfang Eyeliner/4.webp"
+        ],
+        stock: true
+
+    },
 
     
+
+
+
+    { 
+        id: 8000, 
+        category: "undergarmage", 
+        name: "Premium Soft Comfort Ladies Undergarments", 
+        price: 399,
+        best: true,
+        featured: true,
+        discount: 0, // 0% ছাড়ের জন্য 
+        image: "product/jewellery/Hengfang Eyeliner/main.webp", 
+        stars: 4,
+        description: `Product Overview:
+        প্রতিদিনের স্বাচ্ছন্দ্য এবং আত্মবিশ্বাসের জন্য আন্ডারগার্মেন্টসের সঠিক মান নির্বাচন করা অত্যন্ত গুরুত্বপূর্ণ। আমাদের এই কালেকশনটি তৈরি করা হয়েছে প্রিমিয়াম কোয়ালিটি ফেব্রিক দিয়ে, যা আপনার ত্বকের সাথে মিশে থাকবে একদম প্রাকৃতিকভাবে। আধুনিক ডিজাইন এবং নিখুঁত ফিটিংয়ের সমন্বয়ে এটি আপনাকে দেবে সারাদিন আরামদায়ক অভিজ্ঞতা।
+        - Ultra-Soft Breathable Fabric: হাই-কোয়ালিটি কটন বা সিল্কি ফেব্রিক ব্যবহার করা হয়েছে, যা ত্বককে বাতাস চলাচলে সাহায্য করে এবং ঘাম শোষণ করে।
+        - Perfect Fit & Support: এর ইলাস্টিক এবং কাটিং এমনভাবে ডিজাইন করা হয়েছে যা শরীরের সাথে পারফেক্টলি ফিট হয়ে থাকে এবং প্রয়োজনীয় সাপোর্ট দেয়।
+        - Seamless Design: পোশাকের নিচে কোনো দাগ বা লাইন বোঝা যাবে না, ফলে আপনি যেকোনো আউটফিটের সাথে এটি অনায়াসেই পরতে পারবেন।
+        - Skin Friendly: অ্যালার্জি-ফ্রি এবং নরম কাপড় ব্যবহারের ফলে ত্বকে কোনো র‍্যাশ বা চুলকানি হওয়ার ভয় নেই।
+        - Durable Elasticity: বারবার ধোয়ার পরেও এর আকার বা ইলাস্টিক নষ্ট হবে না।
+
+        Care Instructions: 
+        ১. কাপড়ের স্থায়িত্ব বজায় রাখতে হালকা ডিটারজেন্ট দিয়ে হাত দিয়ে ধোওয়া সবচেয়ে ভালো।
+        ২. সরাসরি কড়া রোদে শুকাবেন না, ছায়াযুক্ত স্থানে শুকিয়ে নিন যাতে রঙ নষ্ট না হয়।
+        ৩. ইলাস্টিক ভালো রাখতে ইস্ত্রি (Iron) করা থেকে বিরত থাকুন।
+
+        Technical Details:
+           - Material: 95% Cotton / 5% Spandex (বা আপনার প্রোডাক্ট অনুযায়ী স্প্যানডেক্স/নাইলন)।
+           - Size Availability: M, L, XL, XXL (বা ৩২ থেকে ৪৪ সাইজ)।
+           - Color Options: Nude, Black, White, and Pastel shades.
+           - Wash Care: Hand wash recommended for long-lasting use.
+        `,
+
+        images: [
+        "product/jewellery/Hengfang Eyeliner/3.webp",
+        "product/jewellery/Hengfang Eyeliner/4.webp"
+        ],
+        stock: true
+
+    },
+
+
 
 ];   

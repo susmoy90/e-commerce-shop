@@ -126,3 +126,46 @@ function toggleChat() {
         icon.classList.replace('fa-headset', 'fa-times');
     }
 }
+
+// কন্টাক্ট ফর্মটি পেজে আছে কি না আগে চেক করে নেবে
+const contactForm = document.getElementById('contact-form');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault(); 
+
+        const submitBtn = e.target.querySelector('button');
+        const originalBtnText = submitBtn.innerText;
+        submitBtn.innerText = "Sending...";
+        submitBtn.disabled = true;
+
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value
+        };
+
+        const url = 'https://script.google.com/macros/s/AKfycbzg-huWiIwFx2F_kGVg_xJar5iCBv34d7aKyvYsqX0VHlUAY0O5KUnFM9r2AKepMJe3/exec'; 
+
+        fetch(url, {
+            method: 'POST',
+            mode: 'no-cors',
+            cache: 'no-cache',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        })
+        .then(() => {
+            alert("ধন্যবাদ! আপনার মেসেজটি সফলভাবে আমাদের শিটে জমা হয়েছে।");
+            contactForm.reset(); 
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+            alert("দুঃখিত, মেসেজটি পাঠানো যায়নি।");
+        })
+        .finally(() => {
+            submitBtn.innerText = originalBtnText;
+            submitBtn.disabled = false;
+        });
+    });
+}
