@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - TryAngle</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="preloader">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <h2>TryAngle Shop</h2>
+            <div class="load-text"><span id="load-percentage">0</span>%</div>
+            <div class="progress-bar-container">
+                <div id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <section id="header">   
+        <div class="logo-container">
+        <a href="index.html"><img src="img/logo/final-logo.png" class="logo" alt="TryAngle"> </a>
+        </div>
+        <div>
+            <ul id="navbar">
+                <i id="close" class="fas fa-times"></i>
+
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="offer.html">Offer</a></li>
+                <li>
+                    <a class="active" href="cart.html">
+                        <i class="fa-solid fa-bag-shopping">
+                        </i>
+                        <span id="cart-count">0</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div id="mobile">
+            <a href="cart.html">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span id="mobile-cart-count">0</span>
+            </a>
+            <i id="bar" class="fas fa-outdent"></i>
+        </div>
+    </section>
+
+    <section id="cart-ribbon-section">
+        <div class="ribbon-title">
+            <h2>#cart_items</h2>
+        </div>
+        <p>আপনার পছন্দের প্রোডাক্টগুলো এখানে জমা আছে!</p>
+    </section>
+
+    <section id="cart" class="section-p1">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <td>Remove</td>
+                    <td>Image</td>
+                    <td>Product</td>
+                    <td>Price</td>
+                    <td>Quantity</td>
+                    <td>Subtotal</td>
+                </tr>
+            </thead>
+            <tbody id="cart-items-body">
+            </tbody>
+            <tfoot>
+                <tr class="total-row">
+                    <td colspan="5" style="text-align: right; font-weight: 700; font-size: 16px;">Total Amount:</td>
+                    <td id="table-total" style="font-weight: 700; font-size: 16px; color: #7134a6;">৳ 0</td>
+                </tr>
+            </tfoot>
+        </table>
+    </section>
+
+    <section id="cart-add" class="section-p1">
+        <div id="coupon" style="margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 10px;">
+            <h3>Apply Coupon</h3>
+            <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
+                <input type="text" id="coupon-input" placeholder="Enter Your Coupon Code" 
+                style="padding: 12px; border: 2px solid #6a2aab; border-radius: 5px; outline: none; width: 100%; box-sizing: border-box;">
+                
+                <button onclick="applyCoupon()" 
+                style="padding: 12px; background: #6a2aab; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%;">Apply Coupon</button>
+            </div>
+            <p id="coupon-message" style="margin-top: 10px; font-weight: bold;"></p>
+        </div>
+
+<div id="checkout-form">
+    <h3>Billing Details</h3>
+    <form id="billing-form">
+        <label>Full Name <span class="required-star">*</span></label>
+        <input type="text" id="cust-name" placeholder="আপনার নাম লিখুন" required>
+        
+        <label>Phone Number <span class="required-star">*</span></label>
+        <input type="tel" id="cust-phone" placeholder="01XXXXXXXXX" pattern="01[3-9][0-9]{8}" required>
+        <small>অবশ্যই ১১ ডিজিটের সঠিক নাম্বার দিন (যেমন: 017...)</small>
+
+        <label>Email Address (অপশনাল)</label>
+        <input type="email" id="cust-email" placeholder="example@mail.com ">
+        
+        <label>Full Address <span class="required-star">*</span></label>
+        <textarea id="cust-address" rows="3" placeholder="বাসা নং, রোড নং, এলাকা এবং জেলা লিখুন" required></textarea>
+    </form>
+</div>
+        <div id="subtotal">
+            <h3>Cart Totals</h3>
+            <table>
+                <tr>
+                    <td>Cart Subtotal</td>
+                    <td id="final-subtotal">৳ 0</td>
+                </tr>
+                <tr>
+                    <td>Coupon Discount</td>
+                    <td id="discount-price" style="color: red;">- ৳ 0</td>
+                </tr>
+                <tr>
+                    <td>Shipping Location</td>
+                    <td>
+                        <select id="shipping-location" onchange="updateCartTotal()">
+                            <option value="0">Select Location</option>
+                            <option value="60">Inside Dhaka (৳ 60)</option>
+                            <option value="120">Outside Dhaka (৳ 120)</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong id="final-total">৳ 0</strong></td>
+                </tr>
+            </table>
+            <button class="normal">Proceed to Checkout</button>
+        </div>
+    </section>
+
+
+    <section id="magic-discount" class="section-p1">
+        <div class="magic-wrapper">
+            <h2 class="section-title">Try Your Luck! 🎁</h2>
+            <div class="box-grid">
+                <div class="gift-box" onclick="revealGift(this)">
+                    <div class="gift-lid"></div>
+                    <div class="gift-body">
+                        <div class="gift-content">🎁</div>
+                    </div>
+                    <span class="tap-text">Tap to Open</span>
+                </div>
+                <div class="gift-box" onclick="revealGift(this)">
+                    <div class="gift-lid"></div>
+                    <div class="gift-body">
+                        <div class="gift-content">🎁</div>
+                    </div>
+                    <span class="tap-text">Tap to Open</span>
+                </div>
+                <div class="gift-box" onclick="revealGift(this)">
+                    <div class="gift-lid"></div>
+                    <div class="gift-body">
+                        <div class="gift-content">🎁</div>
+                    </div>
+                    <span class="tap-text">Tap to Open</span>
+                </div>
+            </div>
+
+            <div id="result-display" class="result-card">
+                <h3 id="result-status"></h3>
+                <p id="code-p">Your Code: <strong id="won-code"></strong></p>
+                <button class="apply-btn" onclick="copyAndApply()">Apply Coupon</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="section-p1">
+        <div class="footer-container">
+            <div class="col">
+                <h4>Information</h4>
+                <a href="about.html">About Us</a>
+                <a href="delivery.html">Delivery Information</a>
+                <a href="privacy.html">Privacy Policy</a>
+            </div>
+
+            <div class="col">
+                <h4>Customer Service</h4>
+                <a href="return.html">Return Policy</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+
+            <div class="col">
+                <h4>Address</h4>
+                <p><i class="fa-solid fa-location-dot"></i> Kilikhet amtola, Khilkhet, Dhaka 1229</p>
+                <p><i class="fa-solid fa-envelope"></i> TryAngle@gmail.com</p>
+                <p><i class="fa-solid fa-phone"></i> 01928194590</p>
+            </div>
+        </div>
+
+        <div class="social-container">
+            <div class="social-icons">
+                <a href="https://facebook.com/yourpage" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://m.me/yourpage" target="_blank"><i class="fa-brands fa-facebook-messenger"></i></a>
+                <a href="https://wa.me/8801928194590" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="https://youtube.com/yourchannel" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+            <div class="copyright">
+                <p>Copyright © 2025 . All Rights Reserved. | Design by <strong>TryAngle</strong>.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="chat-container">
+        <div class="chat-options" id="chatOptions">
+            <a href="https://wa.me/8801928194590" target="_blank" class="chat-btn whatsapp-chat">
+                <i class="fab fa-whatsapp"></i>
+                <span class="tooltip">WhatsApp</span>
+            </a>
+            <a href="https://m.me/YOUR_PAGE_USERNAME" target="_blank" class="chat-btn messenger-chat">
+                <i class="fab fa-facebook-messenger"></i>
+                <span class="tooltip">Messenger</span>
+            </a>
+        </div>
+        <button class="chat-toggle" onclick="toggleChat()">
+            <i class="fas fa-headset" id="chatIcon"></i>
+        </button>
+    </div>
+
+    <script src="database_script.js"></script>
+    <script src="common_script.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartCount();   // নেভিবার আপডেট
+            displayCartItems();  // টেবিল লোড
+        });
+    </script>
+</body>
+</html>

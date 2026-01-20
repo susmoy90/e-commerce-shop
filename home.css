@@ -1,0 +1,595 @@
+/* স্লাইডার কন্টেইনার */
+.hero-slider {
+    width: 100%;
+    height: 80vh; 
+    min-height: 400px;
+    position: relative;
+    overflow: hidden;
+    display: block; /* কন্টেইনার নিশ্চিত করতে */
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    /* ছবির পুরো অংশ দেখানোর জন্য 'contain' ব্যবহার করা যেতে পারে, 
+       কিন্তু তাতে দুই পাশে ফাঁকা থাকতে পারে। তাই 'cover' রেখে পজিশন ঠিক করাই ভালো */
+    background-size: 100% 100%; /* ছবিকে টেনে স্ক্রিনের সমান করে দিবে */
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100% !important;
+    height: 100% !important;
+    position: relative;
+    display: flex;
+}
+
+/* বাটন পজিশন - ডানদিকের নিচে */
+.hero-content {
+    position: absolute; 
+    right: 50px;       
+    bottom: 50px;      
+    z-index: 99; /* সবকিছুর উপরে থাকার জন্য */
+}
+
+/* বাটন স্টাইল */
+.btn-main {
+    display: inline-block;
+    padding: 16px 40px;
+    background: linear-gradient(45deg, #6a2aab, #a142f4); /* গ্রেডিয়েন্ট কালার */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 50px; /* রাউন্ড শেপ যা আধুনিক লাগে */
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 5px 15px rgba(106, 42, 171, 0.4); /* শ্যাডো */
+}
+
+.btn-main:hover {
+    background: linear-gradient(45deg, #a142f4, #6a2aab); /* কালার অদলবদল */
+    transform: translateY(-5px) scale(1.05); /* একটু উপরে উঠবে এবং বড় হবে */
+    box-shadow: 0 10px 25px rgba(106, 42, 171, 0.6); /* গাঢ় শ্যাডো */
+    letter-spacing: 2px; /* টেক্সট একটু ছড়িয়ে যাবে */
+}
+.btn-main::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: all 0.6s;
+    z-index: -1;
+}
+.btn-main:hover::before {
+    left: 100%;
+}
+/* মোবাইল ভিউর জন্য */
+@media (max-width: 768px) {
+    .hero-slider {
+        height: 50vh; /* মোবাইলে একটু ছোট */
+    }
+    .hero-content {
+        right: 20px;
+        bottom: 20px;
+    }
+    .btn-main {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+
+
+
+                                            /*categories section */
+/* ক্যাটাগরি সেকশন মেইন কন্টেইনার */
+.categories-section {
+    padding: 80px 0;
+    text-align: center;
+    background-color: #ffffff; /* ক্লিন হোয়াইট ব্যাকগ্রাউন্ড */
+}
+
+.home-title {
+    font-size: 32px;
+    margin-bottom: 50px;
+    font-weight: 800;
+    color: #222;
+    position: relative;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+/* টাইটেলের নিচে ছোট একটি দাগ */
+.home-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;           /* একদম বাম থেকে শুরু হবে */
+    width: 100%;       /* লেখার সমান পুরোটা হবে */
+    height: 3px;
+    background: #6a2aab; /* তোমার বর্তমান কালার */
+}
+
+/* গ্রিড লেআউট - ডেক্সটপে ৪টি করে */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 40px 20px; /* উপরে-নিচে ৪০px, ডানে-বামে ২০px গ্যাপ */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ক্যাটাগরি কার্ড */
+.cat-card {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10px; /* বক্সের ভেতরে জায়গা */
+    background: #ffffff;
+    border-radius: 15px; /* বক্সের কোনা হালকা রাউন্ড */
+    border: 1px solid #f0f0f0; /* হালকা বর্ডার */
+    transition: all 0.3s ease;
+    /* হালকা বক্স শ্যাডো */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); 
+}
+
+/* ছবির গোল ফ্রেম */
+.cat-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; /* ছবি গোল করার জন্য */
+    overflow: hidden;
+    background: #f8f8f8;
+    border: 2px solid transparent; /* হোভারের জন্য আগে থেকেই স্পেস রাখা */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    margin-bottom: 15px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cat-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.2s;
+}
+/* ক্যাটাগরির নাম */
+.cat-card h3 {
+    font-size: 18px;
+    color: #444;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+
+.cat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(106, 42, 171, 0.15); /* তোমার থিম কালারের শ্যাডো */
+    border-color: #6a2aab;
+}
+
+.cat-card:hover img {
+    transform: scale(1.15); /* ছবি একটু জুম হবে */
+}
+
+.cat-card:hover h3 {
+    color: #6a2aab;
+}
+
+/* মোবাইল রেসপন্সিভ - ২ কলামে */
+@media (max-width: 768px) {
+    .categories-section {
+        padding: 50px 0;
+    }
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr); /* মোবাইলে এক লাইনে ২টি */
+        gap: 30px 15px;
+    }
+    .cat-image {
+        width: 120px;
+        height: 120px;
+    }
+    .home-title {
+        font-size: 24px;
+    }
+} 
+
+                                /* --- Home Offer Section Styling --- */
+
+/* সেকশন প্যাডিং */
+.section-padding {
+    padding: 80px 0; /* প্যাডিং একটু বাড়িয়ে দাও যাতে উপরের সেকশন থেকে দূরে থাকে */
+}
+
+/* অফার রো (ফ্লেক্সবক্স) */
+.offer-row {
+    display: flex;
+    justify-content: center; /* মাঝখানে এলাইন করবে */
+    flex-wrap: wrap;
+    gap: 40px; /* ২৫ পিক্সেল থেকে বাড়িয়ে ৪০ পিক্সেল করা হলো */
+    margin-top: 30px;
+}
+.container {
+    max-width: 1200px;
+    margin: 40px auto; /* উপরে-নিচে ৪০ পিক্সেল গ্যাপ দেবে */
+    padding: 0 20px;
+    clear: both; /* উপরের কোনো ফ্লোটিং এলিমেন্ট থাকলে তা ঠিক করবে */
+}
+
+/* মেইন কার্ড ডিজাইন */
+.offer-card {
+    flex: 3;
+    min-width: 350px; /* কার্ডের মিনিমাম সাইজ একটু বাড়ালাম */
+    height: 320px;    /* উচ্চতাও একটু বাড়ালাম যাতে ১২০০ পিক্সেল এ বড় দেখায় */
+    padding: 40px;
+    border-radius: 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 20px 45px rgba(0,0,0,0.12);
+    
+}
+
+/* আলাদা আলাদা গ্রেডিয়েন্ট কালার */
+.offer-30 {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); /* পিঙ্কিশ রেড */
+}
+
+.offer-20 {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); /* ক্লিনিং ব্লু */
+}
+
+.offer-10 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* ফ্রেশ গ্রিন */
+}
+
+/* টেক্সট স্টাইল */
+.offer-card span {
+    font-size: 15px;
+    letter-spacing: 3px;
+    padding: 8px 20px;
+}
+
+.offer-card h2 {
+    font-size: 56px; /* কার্ড বড় হয়েছে, তাই লেখাও বড় করলে ভালো লাগবে */
+    font-weight: 900;
+    margin: 15px 0 30px;
+    letter-spacing: -1px;
+}
+
+/* বাটন ডিজাইন */
+.offer-card a {
+    text-decoration: none;
+    background-color: #ffffff; /* সাদা ব্যাকগ্রাউন্ড */
+    color: #222;               /* টেক্সট কালো */
+    font-size: 15px;
+    font-weight: 700;
+    border: 2px solid #ffffff;
+    padding: 12px 30px;
+    border-radius: 12px;       /* একটু শার্প লুকের জন্য ১৫ থেকে ১২ করলাম */
+    transition: 0.4s ease-in-out;
+    display: inline-block;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* কার্ড হোভার ইফেক্ট */
+.offer-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+}
+
+.offer-card:hover a {
+    color: #ff0000;            
+    border-color: #000000;
+    transform: scale(1.05);    /* হালকা একটু বড় হবে */
+    box-shadow: 0 8px 20px rgba(113, 52, 166, 0.3);
+}
+/* ডেকোরেটিভ সার্কেল (সৌন্দর্যের জন্য) */
+.offer-card::after {
+    content: "";
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    top: -80px;
+    right: -80px;
+    transition: 0.5s;
+}
+.offer-card::before {
+    content: "";
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    bottom: -50px;
+    left: -50px;
+}
+
+.offer-card:hover::after {
+    width: 250px;
+    height: 250px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* মোবাইল রেসপন্সিভ */
+@media (max-width: 768px) {
+    .offer-card {
+        min-width: 100%;
+        height: 220px;
+        padding: 30px;
+    }
+    .offer-card h2 {
+        font-size: 38px;
+    }
+}
+                /*featured product design*/
+#product1, .categories-section, #recent-view-section {
+    text-align: center;
+}
+#product1 p {
+    font-size: 16px;
+    color: #2e2e2e;
+    margin: 15px 0 20px 0;
+}
+#product1 h2.home-title {
+    width: auto !important; /* width: 100% থাকলে সেটি বাতিল করে দিবে */
+    display: inline-block !important;
+}
+
+
+
+                                                                        /* --- Trust Signals Section --- */
+
+.trust-signals {
+    margin: 40px 0;
+    padding: 0;
+}
+
+.trust-row {
+    display: flex;
+    justify-content: center;
+    align-items: stretch; /* যাতে সব বক্স সমান উচ্চতার হয় */
+    flex-wrap: wrap;
+    gap: 0; /* গ্রিড লুকের জন্য গ্যাপ ০ থাকবে */
+    border: 1px solid #eee; /* বাইরের বর্ডার */
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #f9f9f9; /* তোমার পছন্দের সেই হালকা ধূসর ব্যাকগ্রাউন্ড */
+}
+
+.trust-item {
+    text-align: center;
+    flex: 1;
+    min-width: 280px;
+    padding: 40px 30px;
+    transition: 0.3s ease;
+    border-right: 1px solid #eee; /* বক্সের মাঝে গ্রিড লাইন */
+    position: relative;
+    z-index: 1;
+}
+
+/* শেষ বক্সের ডান পাশের বর্ডার থাকবে না */
+.trust-item:last-child {
+    border-right: none;
+}
+
+/* আইকন স্টাইল (আগের মতোই) */
+.trust-item i {
+    font-size: 40px;
+    color: #088178;
+    margin-bottom: 20px;
+    display: inline-block;
+    transition: 0.4s;
+    position: relative;
+}
+
+/* আইকনের পেছনের সেই গোল শেপ */
+.trust-item i::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 50px;
+    background: rgba(8, 129, 120, 0.1);
+    position: absolute;
+    border-radius: 50%;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* একদম মাঝখানে সেট করলাম */
+}
+
+.trust-item h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.trust-item p {
+    font-size: 14px;
+    color: #777;
+    margin: 0;
+}
+
+/* --- হোভার ইফেক্ট (যা তুমি চেয়েছিলে) --- */
+.trust-item:hover {
+    background: #ffffff; /* হোভার করলে সাদা হবে */
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.02); /* ভেতরের দিকে হালকা শ্যাডো */
+    transform: translateY(0); /* গ্রিডের ক্ষেত্রে উপরে না উঠানোই ভালো, তবে চাইলে -5px দিতে পারো */
+}
+
+.trust-item:hover i {
+    transform: scale(1.2) rotate(10deg); /* তোমার সেই প্রিয় এনিমেশন */
+    color: #43e97b;
+}
+
+/* মোবাইল রেসপন্সিভ */
+@media (max-width: 768px) {
+    .trust-item {
+        border-right: none;
+        border-bottom: 1px solid #eee;
+        padding: 30px 20px;
+    }
+    .trust-item:last-child {
+        border-bottom: none;
+    }
+}
+
+                                                                    /* পপ-আপ ব্যাকগ্রাউন্ড (পুরো স্ক্রিন কালো আভা) */
+.modal-overlay {
+    display: none; /* শুরুতে লুকানো থাকবে */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+/* পপ-আপ বক্স */
+.modal-content {
+    background: #fff;
+    width: 90%;
+    max-width: 450px;
+    margin: 15% auto;
+    padding: 30px;
+    border-radius: 20px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* বন্ধ করার বাটন */
+.close-btn {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 25px;
+    cursor: pointer;
+    color: #888;
+}
+
+#modal-body h3 { color: #088178; margin-bottom: 15px; }
+#modal-body p { color: #555; line-height: 1.6; }
+/* সাপোর্ট গ্রিড লেআউট */
+
+.call-section {
+    background: #f0fdfa;
+    border: 2px dashed #088178;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+.call-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.main-call-icon {
+    font-size: 35px;
+    color: #088178;
+    animation: pulse 1.5s infinite; /* কল আইকনটি কাঁপবে */
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.numbers {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: left;
+}
+
+.numbers a {
+    font-size: 18px;
+    font-weight: 700;
+    color: #222;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.numbers a:hover {
+    color: #088178;
+}
+
+
+.support-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* ২ কলাম */
+    gap: 15px;
+}
+
+.support-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 10px;
+    border-radius: 15px;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #fff;
+}
+
+.support-box i {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #fff !important; /* আইকন সাদা থাকবে */
+}
+
+.support-box span {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* আলাদা আলাদা ব্র্যান্ড কালার */
+.support-box.call { background: #088178; } /* তোমার থিম কালার */
+.support-box.whatsapp { background: #25D366; } /* হোয়াটসঅ্যাপ গ্রিন */
+.support-box.messenger { background: #0084FF; } /* মেসেঞ্জার ব্লু */
+
+/* হোভার ইফেক্ট */
+.support-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* মোবাইল রেসপন্সিভ - ফোনের জন্য ২ কলাম করতে পারো অথবা ৩টাই ছোট করে রাখা যায় */
+@media (max-width: 480px) {
+    .support-grid {
+        grid-template-columns: repeat(3, 1fr); /* ছোট স্ক্রিনেও ৩টিই থাকবে */
+        gap: 10px;
+    }
+    .support-box span { font-size: 11px; }
+}
