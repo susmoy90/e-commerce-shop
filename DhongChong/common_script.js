@@ -1,5 +1,3 @@
-// ১. তোমার মাস্টার প্রোডাক্ট ডাটাবেস
-
 
 // single product dekhano
 function loadSingleProduct() {
@@ -777,25 +775,37 @@ function checkCheckoutRequirements() {
 // ইনপুট ফিল্ডগুলোতে ইভেন্ট লিসেনার যোগ করা
 document.addEventListener("DOMContentLoaded", () => {
     // ১. সব পেজের জন্য কার্ট কাউন্ট আপডেট
-    updateCartCount();
+    if (typeof updateCartCount === "function") {
+        updateCartCount();
+    }
 
-    // ২. চেকআউট পেজের জন্য ইনপুট ফিল্ড মনিটর করা (যদি এলিমেন্টগুলো থাকে)
+    // ২. চেকআউট পেজের জন্য ইনপুট ফিল্ড মনিটর করা
     const inputs = ["cust-name", "cust-phone", "cust-address", "shipping-location"];
     
+    // শুধু যদি এলিমেন্টগুলো পেজে থাকে তবেই ইভেন্ট লিসেনার যোগ হবে
     inputs.forEach(id => {
         const element = document.getElementById(id);
-        if(element) {
-            // ইউজার যখনই টাইপ করবে বা সিলেক্ট করবে, তখনই চেক হবে
-            element.addEventListener("input", checkCheckoutRequirements);
-            element.addEventListener("change", checkCheckoutRequirements);
+        if (element) {
+            element.addEventListener("input", () => {
+                if (typeof checkCheckoutRequirements === "function") {
+                    checkCheckoutRequirements();
+                }
+            });
+            element.addEventListener("change", () => {
+                if (typeof checkCheckoutRequirements === "function") {
+                    checkCheckoutRequirements();
+                }
+            });
         }
     });
 
-    // ৩. যদি চেকআউট পেজে থাকে তবে লোড হওয়ার সময় একবার বাটন চেক করা
-    if (typeof checkCheckoutRequirements === "function") {
+    // ৩. শুধু চেকআউট পেজে থাকলেই ফাংশনটি রান করবে
+    // এখানে চেক করা হচ্ছে অন্তত একটি প্রয়োজনীয় ফিল্ড আছে কি না
+    const isCheckoutPage = document.getElementById("cust-name");
+    if (isCheckoutPage && typeof checkCheckoutRequirements === "function") {
         checkCheckoutRequirements();
     }
-});
+}); 
 
 
 // ১. বাটনটিকে খুঁজে দেখা
@@ -865,8 +875,6 @@ if (checkoutBtn) {
         window.location.href = "memo.html"; 
     });
 }
-
-
 function sendToSheet(orderData) {
     const url = 'https://script.google.com/macros/s/AKfycbzmZ3_Auz45t44i2aiX6wPeVYVKSeeGT6GW9jFjcyBQkzHF6Z6WyDbTR6kGWdYTbjHlHA/exec'; // তোমার গুগল স্ক্রিপ্ট থেকে পাওয়া URL টি এখানে বসাও
     
@@ -882,45 +890,50 @@ function sendToSheet(orderData) {
 }
 
 // এই অংশটি তোমার ওয়েবসাইট কোডের ভেতরে থাকবে
-const orderData = {
-    invoiceID: "INV-" + Math.floor(1000 + Math.random() * 9000), // অটো জেনারেটেড আইডি
-    name: document.getElementById('customer-name').value, 
-    phone: document.getElementById('customer-phone').value,
-    address: document.getElementById('customer-address').value,
-    shipping: 60, // বা ১২০ (তোমার লজিক অনুযায়ী)
-    subtotal: cartTotal, // তোমার কার্টের মোট টাকার ভ্যারিয়েবল
-    discount: 0, 
-    total: cartTotal + 60, // শিপিং সহ মোট টাকা
-    itemsString: cart.map(item => item.name).join(", "), 
-    cartItems: cart // এটিই মেমোতে আলাদা রো তৈরি করবে
-};
+// ১. আগে চেক করে নিন ইনপুট ফিল্ডগুলো এই পেজে আছে কি না
+const nameField = document.getElementById('customer-name');
+const phoneField = document.getElementById('customer-phone');
+const addressField = document.getElementById('customer-address');
 
-// এরপর তোমার সেই sendToSheet ফাংশনটি কল করো
-sendToSheet(orderData);
+// ২. শুধু যদি ফিল্ডগুলো থাকে, তবেই orderData তৈরি হবে (সাধারণত চেকআউট পেজে)
+if (nameField && phoneField && addressField) {
+    const orderData = {
+        invoiceID: "INV-" + Math.floor(1000 + Math.random() * 9000),
+        name: nameField.value, 
+        phone: phoneField.value,
+        address: addressField.value,
+        shipping: 60, 
+        subtotal: typeof cartTotal !== 'undefined' ? cartTotal : 0, 
+        discount: 0, 
+        total: (typeof cartTotal !== 'undefined' ? cartTotal : 0) + 60,
+        itemsString: typeof cart !== 'undefined' ? cart.map(item => item.name).join(", ") : "", 
+        cartItems: typeof cart !== 'undefined' ? cart : []
+    };
+    
+    // এরপর আপনার বাকি লজিক এখানে থাকবে...
+}
+
+
 
 // মেনু লিঙ্কগুলো অটোমেটিক ঠিক করার ফাংশন
+
 function fixNavbarLinks() {
-    // ১. চেক করবে ইউজার কি 'categories' ফোল্ডারের কোন ফাইলে আছে কি না
     const path = window.location.pathname;
     const isInsideCategory = path.includes('/categories/');
 
-    if (!isInsideCategory) return; // ফোল্ডারের ভেতর না থাকলে কোড এখানেই থেমে যাবে
+    if (!isInsideCategory) return; 
 
     console.log("Fixing links for category page...");
 
-    // ২. সব লিঙ্ক (Navbar, Logo, Mobile Nav) একসাথে ধরা
     const allLinks = document.querySelectorAll('#navbar li a, .logo-container a, #mobile a');
 
     allLinks.forEach(link => {
         let href = link.getAttribute('href');
-
-        // যদি লিঙ্ক থাকে এবং সেটি ইতিমধ্যে ../ বা http দিয়ে শুরু না হয়
         if (href && !href.startsWith('http') && !href.startsWith('../') && !href.startsWith('#')) {
             link.setAttribute('href', '../' + href);
         }
     });
 
-    // ৩. লোগো ইমেজের পাথ ঠিক করা (যদি আলাদাভাবে থাকে)
     const logoImg = document.querySelector('.logo, .logo-container img');
     if (logoImg) {
         let imgSrc = logoImg.getAttribute('src');
@@ -930,11 +943,11 @@ function fixNavbarLinks() {
     }
 }
 
-// ৪. পেজ লোড হওয়ার সাথে সাথে রান করার জন্য
+// ৩. নিরাপদভাবে ফাংশনটি রান করা
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', fixNavbarLinks);
 } else {
-    fixNavbarLinks(); // যদি ইতিমধ্যে লোড হয়ে থাকে
+    fixNavbarLinks();
 }
 
 function loadFeaturedProducts() {
