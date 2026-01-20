@@ -146,6 +146,8 @@
             <thead>
                 <tr>
                     <th>Product</th>
+                    <th>Size</th>
+                    <th>Color</th>
                     <th>Qty</th>
                     <th>Total</th>
                 </tr>
@@ -188,9 +190,8 @@
     </div> 
     
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
             const customer = JSON.parse(localStorage.getItem('lastOrderCustomer'));
-            console.log("Customer Data from LocalStorage:", customer);
             const cart = JSON.parse(localStorage.getItem('cart'));
             const shipping = localStorage.getItem('lastShippingCharge') || 0;
             const invoiceID = localStorage.getItem('lastInvoiceID');
@@ -200,21 +201,34 @@
                 document.getElementById('m-name').innerText = customer.name;
                 document.getElementById('m-phone').innerText = customer.phone;
                 document.getElementById('m-address').innerText = customer.address;
-                document.getElementById('m-date').innerText = new Date().toLocaleDateString('bn-BD');
+                
+                const formattedDate = new Date().toLocaleDateString('bn-BD');
+                document.getElementById('m-date').innerText = formattedDate;
                 if(invoiceID) document.getElementById('m-invoice').innerText = invoiceID;
 
                 let subtotal = 0;
-                let itemsNames = []; // প্রোডাক্টের নাম জমা করার জন্য
+                let totalQuantity = 0; // মোট কোয়ান্টিটি মাপার জন্য
+                let itemsNames = []; 
+                let allSizes = [];  
+                let allColors = []; 
                 const itemsBody = document.getElementById('m-items');
                 
                 cart.forEach(item => {
                     const total = item.price * item.quantity;
                     subtotal += total;
-                    itemsNames.push(item.name + " (" + item.quantity + ")"); // নাম এবং পরিমাণ যোগ হচ্ছে
+                    totalQuantity += item.quantity; // প্রতিটি আইটেমের কোয়ান্টিটি যোগ হচ্ছে
+                    
+                    const itemDetail = `${item.name} (${item.size || 'N/A'}, ${item.color || 'N/A'}) x${item.quantity}`;
+                    itemsNames.push(itemDetail); 
+                    
+                    if(item.size) allSizes.push(item.size);
+                    if(item.color) allColors.push(item.color);
                     
                     itemsBody.innerHTML += `
                         <tr>
-                            <td>${item.name}</td>
+                            <td style="font-weight: 500;">${item.name}</td>
+                            <td>${item.size || '---'}</td>
+                            <td>${item.color || '---'}</td>
                             <td>${item.quantity}</td>
                             <td>৳${total.toLocaleString()}</td>
                         </tr>
@@ -229,23 +243,24 @@
                 document.getElementById('m-shipping').innerText = shippingCost.toLocaleString();
                 document.getElementById('m-total').innerText = finalGrandTotal.toLocaleString();
 
-                // --- গুগল শিটে ডাটা পাঠানোর অংশ ---
+                // --- আপনার চাহিদামত ডাটা অবজেক্ট ---
                 const orderData = {
-                    invoiceID: invoiceID,
-                    name: customer.name,
-                    phone: customer.phone,
-                    email: customer.email,
-                    address: customer.address,
-                    subtotal: subtotal,
-                    shipping: shippingCost,
-                    discount: discountAmount,
-                    total: finalGrandTotal,
-                    itemsOnly: itemsNames.join(", "), // এখানে 'itemsString' বদলে 'itemsOnly' করা হয়েছে
-                    cartItems: cart 
+                    invoiceID: invoiceID,                 // Invoice ID
+                    date: formattedDate,                  // Date
+                    name: customer.name,                  // Name
+                    phone: customer.phone,                // Phone
+                    email: customer.email || "N/A",       // EmailAddress
+                    address: customer.address,            // Address
+                    deliveryCharge: shippingCost,         // DeliveryCharge
+                    discount: discountAmount,             // Discount
+                    totalAmount: finalGrandTotal,         // Total Amount
+                    productNames: itemsNames.join(" | "), // Product Names
+                    totalQuantity: totalQuantity,         // Total Quantity
+                    product_size: allSizes.join(", "),    // product_size
+                    product_colour: allColors.join(", ")  // product_colour
                 };
-
                 // তোমার গুগল স্ক্রিপ্টের নতুন Web App URL টি এখানে বসাও
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbzB7YOcGqw9ChC_w661T3R3wHDbyZ1Zezt1X28c9oElNIxqtirVdIyehsbYawhB7Q8h8g/exec';
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbwDWoplkPyljCUL2o3hPI3UUF8DDRIK4NhRQ3Qv7LvllmUckCazM8gA297a2msRYGA7Cw/exec';
 
                 fetch(scriptURL, {
                     method: 'POST',

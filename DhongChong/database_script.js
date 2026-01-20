@@ -449,6 +449,9 @@ const allProducts = [
         discount: 0, // 0% ছাড়ের জন্য 
         image: "product/cosmetics/Beauty glazed color twist eyeshadow palette/primary.webp", 
         stars: 5,
+
+        availableColors: ["Black", "White"],
+        
         description: `Product Overview:
         আপনার চোখের সাজকে শিল্পের পর্যায়ে নিয়ে যেতে Beauty Glazed নিয়ে এলো 'Color Twist' আইশ্যাডো প্যালেট। এই একটি প্যালেটেই আপনি পাচ্ছেন ৬৪টি ভিন্ন শেড, যা আপনার গ্ল্যামারাস, ক্যাজুয়াল বা যেকোনো সৃজনশীল আইলুক তৈরির জন্য যথেষ্ট। এর সিল্কি টেক্সচার এবং হাইলি পিগমেন্টেড কালার আপনার মেকআপকে দেবে এক অনন্য মাত্রা।
 
@@ -494,6 +497,10 @@ const allProducts = [
         discount: 0, // 0% ছাড়ের জন্য 
         image: "product/jewellery/Hengfang Eyeliner/main.webp", 
         stars: 4,
+
+        availableSizes: ["M", "L", "XL"],
+        availableColors: ["Black", "White"],
+
         description: `Product Overview:
         নিখুঁত এবং আকর্ষণীয় আই-লুক পেতে Hengfang Eyeliner হতে পারে আপনার প্রতিদিনের মেকআপের অন্যতম সঙ্গী। এর স্মুদ অ্যাপ্লিকেশন এবং ডার্ক ব্ল্যাক ফিনিশ আপনার চোখকে দেবে এক বোল্ড এবং ডিফাইনড লুক। আপনি উইংড লাইনার পছন্দ করেন বা সিম্পল চিকন লাইন—সবকিছুই এখন হবে আরও সহজ।
 

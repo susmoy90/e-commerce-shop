@@ -490,7 +490,7 @@ footer a:hover {
 /* প্রোডাক্টের ভেতরের লেখা (Description) */
 .pro .des {
     text-align: start;
-    padding: 10px 0;
+    padding-bottom: 40px;
 }
 
 .pro .des span {
@@ -896,8 +896,47 @@ button:disabled {
 }
 
                                                                                 /*single product page design*/
+.options-container {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 
-/* পুরো পেজের হালকা ব্যাকগ্রাউন্ড */
+.option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.option-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+}
+
+.option-select {
+    padding: 10px;
+    width: 250px; /* আপনার পছন্দমতো কমিয়ে বাড়িয়ে নিতে পারেন */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fcfcfc;
+    outline: none;
+    cursor: pointer;
+}
+
+.option-select:focus {
+    border-color: #088178;
+}
+
+/* স্টক আউট হলে বাটনের ডিজাইন */
+.out-of-stock-btn {
+    background-color: #ccc !important;
+    cursor: not-allowed !important;
+}
+
+
+                                                                                /* পুরো পেজের হালকা ব্যাকগ্রাউন্ড */
 .pro-wrapper {
     background-color: #f0f2f5; 
     padding: 60px 0;

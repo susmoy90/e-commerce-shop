@@ -50,49 +50,53 @@
         </div>
     </section>
         
-    <section class="pro-wrapper">
-        <div id="prodetails" class="section-p1 ">
-            <div class="single-pro-image">
-                <div id="img-zoom-container" class="zoom-container">
-                    <img src="" width="100%" id="MainImg" alt="">
+<section class="pro-wrapper">
+    <div id="prodetails" class="section-p1">
+        <div class="single-pro-image">
+            <div id="img-zoom-container" class="zoom-container">
+                <img src="" width="100%" id="MainImg" alt="">
+            </div>
+            
+            <div class="small-img-group">
                 </div>
-                
-                <div class="small-img-group">
-                    </div>
+        </div>
+
+        <div class="single-pro-details">
+            <h6>Home / <span id="pro-cat">Category</span></h6>
+            <h4 id="pro-name">Product Name</h4>
+            <h2 id="pro-price">৳ 0.00</h2>
+            
+            <div id="product-options" class="options-container">
+                </div>
+
+            <div class="purchase-info">
+                <input type="number" id="pro-quantity" value="1" min="1" onblur="if(this.value==='' || this.value<1) this.value=1">
+                <button class="normal add-btn" id="main-add-btn" onclick="addToCartFromSingle()">
+                    <i class="fas fa-shopping-cart"></i> Add To Cart
+                </button>
             </div>
 
-            <div class="single-pro-details">
-                <h6>Home / <span id="pro-cat">Category</span></h6>
-                <h4 id="pro-name">Product Name</h4>
-                <h2 id="pro-price">৳ 0.00</h2>
-                
-                <div class="purchase-info">
-                    <input type="number" value="1" min="1" id="pro-quantity">
-                    <button class="normal add-btn" onclick="addToCartFromSingle()">
-                        <i class="fas fa-shopping-cart"></i> Add To Cart
-                    </button>
+            <div class="share-container">
+                <span>শেয়ার করুন:</span>
+                <div class="share-icons">
+                    <a id="fb-share" href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a id="wa-share" href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a id="copy-link" href="javascript:void(0)" onclick="copyToClipboard()"><i class="fas fa-link"></i></a>
                 </div>
+            </div>
 
-                <div class="share-container">
-                    <span>শেয়ার করুন:</span>
-                    <div class="share-icons">
-                        <a id="fb-share" href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                        <a id="wa-share" href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                        <a id="copy-link" href="javascript:void(0)" onclick="copyToClipboard()"><i class="fas fa-link"></i></a>
-                    </div>
-                </div>
-
-                <h4>Product Details</h4>
-                <span id="pro-desc">
+            <h4>Product Details</h4>
+            <span id="pro-desc">
                 </span>
-                <div class="shop-back-container">
-                    <button class="normal back-to-shop-btn" onclick="window.location.href='shop.html'">
-                        <i class="fas fa-arrow-left"></i> আরও পণ্য দেখুন (Continue Shopping)
-                    </button>
-                </div>
+
+            <div class="shop-back-container">
+                <button class="normal back-to-shop-btn" onclick="window.location.href='shop.html'">
+                    <i class="fas fa-arrow-left"></i> আরও পণ্য দেখুন (Continue Shopping)
+                </button>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <section id="product1" class="section-p1">
         <h2>Related Products</h2>
@@ -121,13 +125,20 @@
                     <img id="qv-image" src="" alt="">
                 </div>
                 <div class="modal-details">
-                    <h2 id="qv-name"></h2>
-                    <h3 id="qv-price"></h3>
-                    <p id="qv-desc">আমাদের এই প্রিমিয়াম কোয়ালিটি প্রোডাক্টটি আপনার দৈনন্দিন ফ্যাশনে আভিজাত্য যোগ করবে। এটি টেকসই এবং আরামদায়ক।</p>
+                    <h2 id="qv-name">Product Name</h2>
+                    
+                    <h3 id="qv-price">৳0</h3>
+                    
+                    <div id="qv-options-container" style="margin: 15px 0;"></div>
+
                     <div class="qv-actions">
                         <input type="number" id="qv-quantity" value="1" min="1">
-                        <button id="qv-add-btn" class="add-to-cart-btn">Add to Cart</button>
+                        <button class="add-to-cart-btn" id="qv-add-btn">Add to Cart</button>
                     </div>
+
+                    <p id="qv-desc" style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
+                        এখানে প্রোডাক্টের বিস্তারিত বর্ণনা থাকবে।
+                    </p>
                 </div>
             </div>
         </div>
