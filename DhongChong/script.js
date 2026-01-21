@@ -156,7 +156,7 @@ if (contactForm) {
             body: JSON.stringify(formData)
         })
         .then(() => {
-            alert("ধন্যবাদ! আপনার মেসেজটি সফলভাবে আমাদের শিটে জমা হয়েছে।");
+            alert("ধন্যবাদ! আপনার মেসেজটি সফলভাবে আমাদের কাছে পাঠানো হয়েছে।");
             contactForm.reset(); 
         })
         .catch(error => {

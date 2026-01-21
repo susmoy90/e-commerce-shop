@@ -190,174 +190,146 @@
     </div> 
     
     <script>
-document.addEventListener("DOMContentLoaded", () => {
-            const customer = JSON.parse(localStorage.getItem('lastOrderCustomer'));
-            const cart = JSON.parse(localStorage.getItem('cart'));
-            const shipping = localStorage.getItem('lastShippingCharge') || 0;
-            const invoiceID = localStorage.getItem('lastInvoiceID');
-            const discountAmount = parseFloat(localStorage.getItem('lastDiscountAmount')) || 0;
+ document.addEventListener("DOMContentLoaded", () => {
+    // ১. লোকাল স্টোরেজ থেকে ডেটা সংগ্রহ
+    const customer = JSON.parse(localStorage.getItem('lastOrderCustomer'));
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    const shipping = localStorage.getItem('lastShippingCharge') || 0;
+    const invoiceID = localStorage.getItem('lastInvoiceID');
+    const discountAmount = parseFloat(localStorage.getItem('lastDiscountAmount')) || 0;
 
-            if (customer && cart && cart.length > 0) {
-                document.getElementById('m-name').innerText = customer.name;
-                document.getElementById('m-phone').innerText = customer.phone;
-                document.getElementById('m-address').innerText = customer.address;
-                
-                const formattedDate = new Date().toLocaleDateString('bn-BD');
-                document.getElementById('m-date').innerText = formattedDate;
-                if(invoiceID) document.getElementById('m-invoice').innerText = invoiceID;
+    if (customer && cart && cart.length > 0) {
+        // ২. UI তে কাস্টমার ইনফো দেখানো
+        document.getElementById('m-name').innerText = customer.name;
+        document.getElementById('m-phone').innerText = customer.phone;
+        document.getElementById('m-address').innerText = customer.address;
+        
+        const formattedDate = new Date().toLocaleDateString('en-GB'); // এতে 21/01/2026 ফরম্যাটে আসবে
+        document.getElementById('m-date').innerText = formattedDate;
+        if(invoiceID) document.getElementById('m-invoice').innerText = invoiceID;
 
-                let subtotal = 0;
-                let totalQuantity = 0; // মোট কোয়ান্টিটি মাপার জন্য
-                let itemsNames = []; 
-                let allSizes = [];  
-                let allColors = []; 
-                const itemsBody = document.getElementById('m-items');
-                
-                cart.forEach(item => {
-                    const total = item.price * item.quantity;
-                    subtotal += total;
-                    totalQuantity += item.quantity; // প্রতিটি আইটেমের কোয়ান্টিটি যোগ হচ্ছে
-                    
-                    const itemDetail = `${item.name} (${item.size || 'N/A'}, ${item.color || 'N/A'}) x${item.quantity}`;
-                    itemsNames.push(itemDetail); 
-                    
-                    if(item.size) allSizes.push(item.size);
-                    if(item.color) allColors.push(item.color);
-                    
-                    itemsBody.innerHTML += `
-                        <tr>
-                            <td style="font-weight: 500;">${item.name}</td>
-                            <td>${item.size || '---'}</td>
-                            <td>${item.color || '---'}</td>
-                            <td>${item.quantity}</td>
-                            <td>৳${total.toLocaleString()}</td>
-                        </tr>
-                    `;
-                });
+        let subtotal = 0;
+        let totalQty = 0;
+        let itemsBody = document.getElementById('m-items');
+        
+        // প্রোডাক্টের নাম, সাইজ এবং কালার লিস্ট করার জন্য ভেরিয়েবল
+        let productNamesArray = [];
+        let sizesArray = [];
+        let colorsArray = [];
 
-                let shippingCost = parseFloat(shipping);
-                let finalGrandTotal = (subtotal - discountAmount) + shippingCost;
+        cart.forEach(item => {
+            const itemTotal = item.price * item.quantity;
+            subtotal += itemTotal;
+            totalQty += item.quantity;
+            
+            // নাম, সাইজ, কালার আলাদা অ্যারেতে রাখা (শিটে পাঠানোর জন্য)
+            productNamesArray.push(`${item.name} (x${item.quantity})`);
+            sizesArray.push(item.size || '-');
+            colorsArray.push(item.color || '-');
 
-                document.getElementById('m-subtotal').innerText = subtotal.toLocaleString();
-                document.getElementById('m-discount').innerText = discountAmount.toLocaleString();
-                document.getElementById('m-shipping').innerText = shippingCost.toLocaleString();
-                document.getElementById('m-total').innerText = finalGrandTotal.toLocaleString();
-
-                // --- আপনার চাহিদামত ডাটা অবজেক্ট ---
-                const orderData = {
-                    invoiceID: invoiceID,                 // Invoice ID
-                    date: formattedDate,                  // Date
-                    name: customer.name,                  // Name
-                    phone: customer.phone,                // Phone
-                    email: customer.email || "N/A",       // EmailAddress
-                    address: customer.address,            // Address
-                    deliveryCharge: shippingCost,         // DeliveryCharge
-                    discount: discountAmount,             // Discount
-                    totalAmount: finalGrandTotal,         // Total Amount
-                    productNames: itemsNames.join(" | "), // Product Names
-                    totalQuantity: totalQuantity,         // Total Quantity
-                    product_size: allSizes.join(", "),    // product_size
-                    product_colour: allColors.join(", ")  // product_colour
-                };
-                // তোমার গুগল স্ক্রিপ্টের নতুন Web App URL টি এখানে বসাও
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbwDWoplkPyljCUL2o3hPI3UUF8DDRIK4NhRQ3Qv7LvllmUckCazM8gA297a2msRYGA7Cw/exec';
-
-                fetch(scriptURL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify(orderData)
-                })
-                .then(response => {
-                    console.log("Data sent successfully!");
-                    
-
-                    // ২. কুপন এবং ডিসকাউন্ট ডাটাও এখান থেকেই মুছে ফেলো (নতুন যোগ করা হলো)
-                    localStorage.removeItem('cart'); 
-                    localStorage.removeItem('savedDiscount');      
-                    localStorage.removeItem('savedCouponCode');    
-                    localStorage.removeItem('lastDiscountAmount'); 
-                })
-                .catch(error => {
-                    console.error('Error!', error.message);
-                    
-                    // এরর আসলেও ডাটা মুছে দেওয়া নিরাপদ যাতে কাস্টমার রিফ্রেশ দিয়ে বারবার একই অর্ডার না পাঠাতে পারে
-                    localStorage.removeItem('cart');
-                    localStorage.removeItem('savedDiscount');
-                    localStorage.removeItem('savedCouponCode');
-                });
-
-            } else {
-                // এরর মেসেজ অংশ (পুরো বডি সাদা করে কন্টাক্ট ইনফো দেখানোর জন্য)
-                document.body.style.backgroundColor = "#fff"; 
-                document.body.innerHTML = `
-                    <div style="
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: center;
-                        height: 100vh;
-                        text-align: center;
-                        padding: 30px;
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                    ">
-                        <div style="font-size: 80px; margin-bottom: 20px;">📄</div>
-                        <h2 style="color:#333; margin-bottom: 15px; font-size: 26px;">অর্ডার মেমো ডাউনলোড !</h2>
-                        
-                        <div style="max-width: 500px; background: #f9f9f9; padding: 25px; border-radius: 15px; border: 1px solid #eee;">
-                            <p style="color:#555; margin-bottom: 15px; font-size: 17px; line-height: 1.6;">
-                                আপনি যদি আপনার অর্ডার মেমো ডাউনলোড না করে থাকেন, তবে নিচের <b>WhatsApp</b> নাম্বারে যোগাযোগ করে সেটি সংগ্রহ করতে পারেন।
-                            </p>
-                            
-                            <a href="https://wa.me/8801928194590" target="_blank" style="
-                                display: inline-block;
-                                color: #25D366;
-                                font-size: 20px;
-                                font-weight: bold;
-                                text-decoration: none;
-                                margin-bottom: 20px;
-                            ">
-                                <i class="fab fa-whatsapp"></i> 01928194590
-                            </a>
-
-                            <p style="color:#666; font-size: 15px; border-top: 1px solid #ddd; pt: 15px; padding-top: 15px;">
-                                অথবা আপনি যদি আপনার <b>Gmail</b> পূরণ করে থাকেন, তবে আপনার ইমেইল চেক করুন; সেখানে আপনার ইনভয়েসটি পাঠানো হয়েছে।
-                            </p>
-                        </div>
-                        
-                        <a href="shop.html" style="
-                            margin-top: 30px;
-                            display: inline-block;
-                            padding: 12px 35px;
-                            background-color: #6a2aab;
-                            color: white;
-                            text-decoration: none;
-                            border-radius: 50px;
-                            font-size: 16px;
-                            font-weight: bold;
-                            box-shadow: 0 5px 15px rgba(106, 42, 171, 0.2);
-                        ">
-                            শপ পেজে ফিরে যান
-                        </a>
-                    </div>
-                `;
-            }
+            // টেবিলে রো যোগ করা
+            itemsBody.innerHTML += `
+                <tr>
+                    <td style="font-weight: 500;">${item.name}</td>
+                    <td>${item.size || '---'}</td>
+                    <td>${item.color || '---'}</td>
+                    <td>${item.quantity}</td>
+                    <td>৳${itemTotal.toLocaleString()}</td>
+                </tr>
+            `;
         });
-        window.addEventListener('pageshow', function(event) {
-            if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-                window.location.reload();
-            }
-        });
-        window.onload = function() {
-        // মেমো পেজ লোড হওয়ার ২ সেকেন্ড পর কার্ট ক্লিয়ার হবে
-            setTimeout(() => {
-                if(localStorage.getItem('cart')) {
-                    localStorage.removeItem('cart');
-                    localStorage.removeItem('savedDiscount');
-                    localStorage.removeItem('savedCouponCode');
-                    console.log("Cart cleaned successfully!");
-                }
-            }, 2000); 
+
+        let shippingCost = parseFloat(shipping);
+        let finalGrandTotal = (subtotal - discountAmount) + shippingCost;
+
+        // ক্যালকুলেশন UI আপডেট
+        document.getElementById('m-subtotal').innerText = subtotal.toLocaleString('en-US');
+        document.getElementById('m-discount').innerText = discountAmount.toLocaleString('en-US');
+        document.getElementById('m-shipping').innerText = shippingCost.toLocaleString('en-US');
+        document.getElementById('m-total').innerText = finalGrandTotal.toLocaleString('en-US');
+
+        // ৩. গুগল শিটে পাঠানোর জন্য ডেটা অবজেক্ট তৈরি (আপনার ১৩টি কলাম অনুযায়ী)
+        const orderData = {
+            invoiceID: invoiceID,
+            date: formattedDate,
+            name: customer.name,
+            phone: customer.phone,
+            email: customer.email || "",
+            address: customer.address,
+            deliveryCharge: shippingCost,
+            discount: discountAmount,
+            totalAmount: finalGrandTotal,
+            productNames: productNamesArray.join(", "), 
+            totalQuantity: totalQty,
+            product_size: sizesArray.join(", "),
+            product_colour: colorsArray.join(", "),
+            cartItems: cart // PDF জেনারেশনের জন্য
         };
+
+        // গুগল স্ক্রিপ্ট URL
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzexOdAjbgRpnYl1RLZfo2p9LHifWRBBeJnLs2tW1hphCQ4OGUw-aOT7kiyJytS6BNDgw/exec';
+
+        // ৪. ডেটা পাঠানো
+        fetch(scriptURL, {
+            method: 'POST',
+            mode: 'no-cors', // এটি গুরুত্বপূর্ণ
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(orderData)
+        })
+        .then(() => {
+            console.log("Data sent to Google Sheet!");
+            clearOrderStorage();
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+            clearOrderStorage(); // এরর হলেও ক্লিয়ার করা ভালো যাতে ডুপ্লিকেট না হয়
+        });
+
+    } else {
+        showErrorMessage();
+    }
+});
+
+// স্টোরেজ ক্লিয়ার করার ফাংশন
+function clearOrderStorage() {
+    localStorage.removeItem('cart');
+    localStorage.removeItem('savedDiscount');
+    localStorage.removeItem('savedCouponCode');
+    localStorage.removeItem('lastDiscountAmount');
+    localStorage.removeItem('lastOrderCustomer');
+    localStorage.removeItem('lastInvoiceID');
+    localStorage.removeItem('lastShippingCharge');
+}
+
+// এরর মেসেজ দেখানোর ফাংশন
+function showErrorMessage() {
+    document.body.style.backgroundColor = "#fff"; 
+    document.body.innerHTML = `
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; text-align: center; padding: 30px; font-family: sans-serif;">
+            <div style="font-size: 80px; margin-bottom: 20px;">📄</div>
+            <h2 style="color:#333; margin-bottom: 15px; font-size: 26px;">অর্ডার মেমো আর নেই!</h2>
+            <div style="max-width: 500px; background: #f9f9f9; padding: 25px; border-radius: 15px; border: 1px solid #eee;">
+                <p style="color:#555; margin-bottom: 15px; font-size: 17px; line-height: 1.6;">
+                    আপনি যদি আপনার মেমোটি ডাউনলোড করতে না পারেন, তবে চিন্তা করবেন না। <br>আপনি যদি অর্ডার করার সময় <b>Gmail</b> দিয়ে থাকেন, তবে আপনার ইমেইল চেক করুন;<br> সেখানে আপনার ইনভয়েসটি ইতিমধ্যে পাঠিয়ে দেওয়া হয়েছে। 
+                    <br>আপনি যদি মেমো না পান, তবে হোয়াটসঅ্যাপে যোগাযোগ করুন।
+                </p>
+                <a href="https://wa.me/8801928194590" target="_blank" style="color: #25D366; font-size: 20px; font-weight: bold; text-decoration: none;">
+                    WhatsApp: 01928194590
+                </a>
+            </div>
+            <a href="shop.html" style="margin-top: 30px; display: inline-block; padding: 12px 35px; background-color: #6a2aab; color: white; text-decoration: none; border-radius: 50px; font-weight: bold;">
+                শপ পেজে ফিরে যান
+            </a>
+        </div>
+    `;
+}
+
+// ব্যাক বাটন প্রিভেন্ট করা
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+        window.location.reload();
+    }
+});
     </script>
 </body>
 </html>
