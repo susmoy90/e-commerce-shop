@@ -710,8 +710,9 @@ function addToCart(productId, quantity = 1) {
 function displayCartItems() {
     const cartBody = document.getElementById('cart-items-body');
     if (!cartBody) return; 
-
+    
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
     cartBody.innerHTML = ""; 
 
     if (cart.length === 0) {

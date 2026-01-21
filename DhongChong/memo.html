@@ -241,14 +241,14 @@
 
         let shippingCost = parseFloat(shipping);
         let finalGrandTotal = (subtotal - discountAmount) + shippingCost;
-
+        
         // ক্যালকুলেশন UI আপডেট
         document.getElementById('m-subtotal').innerText = subtotal.toLocaleString('en-US');
         document.getElementById('m-discount').innerText = discountAmount.toLocaleString('en-US');
         document.getElementById('m-shipping').innerText = shippingCost.toLocaleString('en-US');
         document.getElementById('m-total').innerText = finalGrandTotal.toLocaleString('en-US');
 
-        // ৩. গুগল শিটে পাঠানোর জন্য ডেটা অবজেক্ট তৈরি (আপনার ১৩টি কলাম অনুযায়ী)
+        // ৩. ডেটা অবজেক্ট তৈরি
         const orderData = {
             invoiceID: invoiceID,
             date: formattedDate,
@@ -263,33 +263,36 @@
             totalQuantity: totalQty,
             product_size: sizesArray.join(", "),
             product_colour: colorsArray.join(", "),
-            cartItems: cart // PDF জেনারেশনের জন্য
+            cartItems: cart 
         };
+
+        // ৪. ডেটা পাঠানোর ঠিক আগেই স্টোরেজ ক্লিয়ার করুন (সবচেয়ে নিরাপদ পদ্ধতি)
+        clearOrderStorage(); 
+        console.log("Local storage cleared. Sending data to server...");
 
         // গুগল স্ক্রিপ্ট URL
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzexOdAjbgRpnYl1RLZfo2p9LHifWRBBeJnLs2tW1hphCQ4OGUw-aOT7kiyJytS6BNDgw/exec';
 
-        // ৪. ডেটা পাঠানো
+        // ৫. ডেটা পাঠানো (ইন্টারনেট স্লো হলেও orderData ভেরিয়েবল থেকে ডাটা চলে যাবে)
         fetch(scriptURL, {
             method: 'POST',
-            mode: 'no-cors', // এটি গুরুত্বপূর্ণ
+            mode: 'no-cors',
             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify(orderData)
         })
         .then(() => {
-            console.log("Data sent to Google Sheet!");
-            clearOrderStorage();
+            console.log("Success: Data sent to Google Sheet!");
         })
         .catch(error => {
-            console.error('Error!', error.message);
-            clearOrderStorage(); // এরর হলেও ক্লিয়ার করা ভালো যাতে ডুপ্লিকেট না হয়
+            console.error('Network Error:', error.message);
+            // এখানে আর clear করার দরকার নেই কারণ আমরা আগেই করে ফেলেছি
         });
 
     } else {
         showErrorMessage();
     }
 });
-
+ 
 // স্টোরেজ ক্লিয়ার করার ফাংশন
 function clearOrderStorage() {
     localStorage.removeItem('cart');
