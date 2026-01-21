@@ -237,6 +237,15 @@
             updateCartCount();   // নেভিবার আপডেট
             displayCartItems();  // টেবিল লোড
         });
+
+        // নতুন যোগ করা কোড: ব্যাক বাটন দিয়ে ফিরলে যেন পুরনো কার্ট না দেখায়
+        window.addEventListener('pageshow', function(event) {
+            // event.persisted চেক করে পেজটি ব্রাউজার ক্যাশ থেকে আসছে কিনা
+            if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+                // পেজটি রিফ্রেশ করা হবে যাতে লোকাল স্টোরেজ থেকে নতুন (খালি) ডাটা লোড হয়
+                window.location.reload();
+            }
+        });
     </script>
 </body>
 </html>
