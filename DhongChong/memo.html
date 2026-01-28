@@ -110,37 +110,39 @@
 </head>
 <body>
 
-    <div class="memo-wrapper">
-        <div class="header-container">
-            <div class="memo-header">
-                <h1>Official Invoice</h1>
-            </div>
-            <div class="shop-brand">
-                <h2>TryAngle</h2>
-                <p>www.TryAngleshop.com</p>
-            </div>
+<div class="memo-wrapper">
+    <div class="header-container">
+        <div class="memo-header">
+            <h1>Official Invoice</h1>
         </div>
 
-        <div class="thanks-msg">
-            <i class="fas fa-check-circle"></i>
-            <h2>Thank You!</h2>
-            <p>আপনার অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে।</p>
+        <div class="shop-brand">
+            <h2>TryAngle</h2>
+            <p>www.TryAngleshop.com</p>
+        </div>
+    </div>
+
+    <div class="thanks-msg">
+        <i class="fas fa-check-circle"></i>
+        <h2>Thank You!</h2>
+        <p>আপনার অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে।</p>
+    </div>
+
+    <div class="info-grid">
+        <div class="info-box">
+            <h4>Customer Details</h4>
+            <p><strong>Name:</strong> <span id="m-name">---</span></p>
+            <p><strong>Phone:</strong> <span id="m-phone">---</span></p>
+            <p><strong>Address:</strong> <span id="m-address">---</span></p>
         </div>
 
-        <div class="info-grid">
-            <div class="info-box">
-                <h4>Customer Details</h4>
-                <p><strong>Name:</strong> <span id="m-name">---</span></p>
-                <p><strong>Phone:</strong> <span id="m-phone">---</span></p>
-                <p><strong>Address:</strong> <span id="m-address">---</span></p>
-            </div>
-            <div class="info-box" style="text-align: right;">
-                <h4>Order Info</h4>
-                <p><strong>Invoice No:</strong> <span id="m-invoice">---</span></p>
-                <p><strong>Date:</strong> <span id="m-date">---</span></p>
-                <p><strong>Status:</strong> Cash on Delivery</p>
-            </div>
+        <div class="info-box" style="text-align: right;">
+            <h4>Order Info</h4>
+            <p><strong>Invoice No:</strong> <span id="m-invoice">---</span></p>
+            <p><strong>Date:</strong> <span id="m-date">---</span></p>
+            <p><strong>Status:</strong> Cash on Delivery</p>
         </div>
+    </div>
 
         <table>
             <thead>
@@ -173,24 +175,36 @@
                 <span>৳<span id="m-total">0</span></span>
             </div>
         </div>
-
-        <div class="footer-note">
-            <p>এটি একটি কম্পিউটার জেনারেটেড কপি, কোনো সিগনেচারের প্রয়োজন নেই।</p>
-            <p>© 2026 Your TryAngle shop. All Rights Reserved.</p>
+        
+    <div id="delivery-info-box" style="margin-bottom: 20px;">
+        <div style="padding: 12px; background: #f8f9fa; border: 1px dashed #6a2aab; border-radius: 8px; display: flex; align-items: center; gap: 12px;">
+            <div style="font-size: 20px; color: #6a2aab;">
+                <i class="fas fa-shipping-fast"></i>
+            </div>
+            <div>
+                <h4 style="margin: 0; font-size: 14px; color: #333;">সম্ভাব্য ডেলিভারি সময়:</h4>
+                <p id="delivery-estimate-text" style="margin: 3px 0 0; color: #6a2aab; font-weight: bold; font-size: 15px; ">হিসাব করা হচ্ছে...</p>
+            </div>
         </div>
+    </div>
 
-        <div class="no-print">
-            <button class="btn btn-print" onclick="window.print()">
-                <i class="fas fa-print"></i> Print Memo
-            </button>
-            <a href="shop.html" class="btn btn-home">
-                <i class="fas fa-home"></i> Back to Shop
-            </a>
-        </div>
-    </div> 
+    <div class="footer-note">
+        <p>এটি একটি কম্পিউটার জেনারেটেড কপি, কোনো সিগনেচারের প্রয়োজন নেই।</p>
+        <p>© 2026 Your TryAngle shop. All Rights Reserved.</p>
+    </div>
+
+    <div class="no-print">
+        <button class="btn btn-print" onclick="window.print()">
+            <i class="fas fa-print"></i> Print Memo
+        </button>
+        <a href="shop.html" class="btn btn-home">
+            <i class="fas fa-home"></i> Back to Shop
+        </a>
+    </div>
+</div> 
     
-    <script>
- document.addEventListener("DOMContentLoaded", () => {
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
     // ১. লোকাল স্টোরেজ থেকে ডেটা সংগ্রহ
     const customer = JSON.parse(localStorage.getItem('lastOrderCustomer'));
     const cart = JSON.parse(localStorage.getItem('cart'));
@@ -207,6 +221,7 @@
         const formattedDate = new Date().toLocaleDateString('en-GB'); // এতে 21/01/2026 ফরম্যাটে আসবে
         document.getElementById('m-date').innerText = formattedDate;
         if(invoiceID) document.getElementById('m-invoice').innerText = invoiceID;
+
 
         let subtotal = 0;
         let totalQty = 0;
@@ -241,6 +256,15 @@
 
         let shippingCost = parseFloat(shipping);
         let finalGrandTotal = (subtotal - discountAmount) + shippingCost;
+
+        const deliveryTextElement = document.getElementById('delivery-estimate-text');
+
+        // আপনার শিপিং চার্জ যদি ঢাকার ভেতরে ৮০ হয় (বা তার কম)
+        if (shippingCost <= 60) { 
+            deliveryTextElement.innerText = "২৪ থেকে ৪৮ ঘণ্টার মধ্যে আপনার হাতে পৌঁছে যাবে। (Inside Dhaka)";
+        } else {
+            deliveryTextElement.innerText = "৪৮ থেকে ৭২ ঘণ্টার মধ্যে আপনার হাতে পৌঁছে যাবে। (Outside Dhaka)";
+        }
         
         // ক্যালকুলেশন UI আপডেট
         document.getElementById('m-subtotal').innerText = subtotal.toLocaleString('en-US');
@@ -271,7 +295,7 @@
         console.log("Local storage cleared. Sending data to server...");
 
         // গুগল স্ক্রিপ্ট URL
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzexOdAjbgRpnYl1RLZfo2p9LHifWRBBeJnLs2tW1hphCQ4OGUw-aOT7kiyJytS6BNDgw/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwan2rhCkxo64_dqqyQ5XINR_Ov3U4FQk4EN6CvLDYQIqJjkspKkj85mctJDicn2qoS2A/exec';
 
         // ৫. ডেটা পাঠানো (ইন্টারনেট স্লো হলেও orderData ভেরিয়েবল থেকে ডাটা চলে যাবে)
         fetch(scriptURL, {
@@ -288,51 +312,51 @@
             // এখানে আর clear করার দরকার নেই কারণ আমরা আগেই করে ফেলেছি
         });
 
-    } else {
-        showErrorMessage();
-    }
-});
+        } else {
+            showErrorMessage();
+        }
+    });
  
-// স্টোরেজ ক্লিয়ার করার ফাংশন
-function clearOrderStorage() {
-    localStorage.removeItem('cart');
-    localStorage.removeItem('savedDiscount');
-    localStorage.removeItem('savedCouponCode');
-    localStorage.removeItem('lastDiscountAmount');
-    localStorage.removeItem('lastOrderCustomer');
-    localStorage.removeItem('lastInvoiceID');
-    localStorage.removeItem('lastShippingCharge');
-}
+    // স্টোরেজ ক্লিয়ার করার ফাংশন
+    function clearOrderStorage() {
+        localStorage.removeItem('cart');
+        localStorage.removeItem('savedDiscount');
+        localStorage.removeItem('savedCouponCode');
+        localStorage.removeItem('lastDiscountAmount');
+        localStorage.removeItem('lastOrderCustomer');
+        localStorage.removeItem('lastInvoiceID');
+        localStorage.removeItem('lastShippingCharge');
+    }
 
-// এরর মেসেজ দেখানোর ফাংশন
-function showErrorMessage() {
-    document.body.style.backgroundColor = "#fff"; 
-    document.body.innerHTML = `
-        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; text-align: center; padding: 30px; font-family: sans-serif;">
-            <div style="font-size: 80px; margin-bottom: 20px;">📄</div>
-            <h2 style="color:#333; margin-bottom: 15px; font-size: 26px;">অর্ডার মেমো আর নেই!</h2>
-            <div style="max-width: 500px; background: #f9f9f9; padding: 25px; border-radius: 15px; border: 1px solid #eee;">
-                <p style="color:#555; margin-bottom: 15px; font-size: 17px; line-height: 1.6;">
-                    আপনি যদি আপনার মেমোটি ডাউনলোড করতে না পারেন, তবে চিন্তা করবেন না। <br>আপনি যদি অর্ডার করার সময় <b>Gmail</b> দিয়ে থাকেন, তবে আপনার ইমেইল চেক করুন;<br> সেখানে আপনার ইনভয়েসটি ইতিমধ্যে পাঠিয়ে দেওয়া হয়েছে। 
-                    <br>আপনি যদি মেমো না পান, তবে হোয়াটসঅ্যাপে যোগাযোগ করুন।
-                </p>
-                <a href="https://wa.me/8801928194590" target="_blank" style="color: #25D366; font-size: 20px; font-weight: bold; text-decoration: none;">
-                    WhatsApp: 01928194590
+    // এরর মেসেজ দেখানোর ফাংশন
+    function showErrorMessage() {
+        document.body.style.backgroundColor = "#fff"; 
+        document.body.innerHTML = `
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; text-align: center; padding: 30px; font-family: sans-serif;">
+                <div style="font-size: 80px; margin-bottom: 20px;">📄</div>
+                <h2 style="color:#333; margin-bottom: 15px; font-size: 26px;">অর্ডার মেমো আর নেই!</h2>
+                <div style="max-width: 500px; background: #f9f9f9; padding: 25px; border-radius: 15px; border: 1px solid #eee;">
+                    <p style="color:#555; margin-bottom: 15px; font-size: 17px; line-height: 1.6;">
+                        আপনি যদি আপনার মেমোটি ডাউনলোড করতে না পারেন, তবে চিন্তা করবেন না। <br>আপনি যদি অর্ডার করার সময় <b>Gmail</b> দিয়ে থাকেন, তবে আপনার ইমেইল চেক করুন;<br> সেখানে আপনার ইনভয়েসটি ইতিমধ্যে পাঠিয়ে দেওয়া হয়েছে। 
+                        <br>আপনি যদি মেমো না পান, তবে হোয়াটসঅ্যাপে যোগাযোগ করুন।
+                    </p>
+                    <a href="https://wa.me/8801928194590" target="_blank" style="color: #25D366; font-size: 20px; font-weight: bold; text-decoration: none;">
+                        WhatsApp: 01928194590
+                    </a>
+                </div>
+                <a href="shop.html" style="margin-top: 30px; display: inline-block; padding: 12px 35px; background-color: #6a2aab; color: white; text-decoration: none; border-radius: 50px; font-weight: bold;">
+                    শপ পেজে ফিরে যান
                 </a>
             </div>
-            <a href="shop.html" style="margin-top: 30px; display: inline-block; padding: 12px 35px; background-color: #6a2aab; color: white; text-decoration: none; border-radius: 50px; font-weight: bold;">
-                শপ পেজে ফিরে যান
-            </a>
-        </div>
-    `;
-}
-
-// ব্যাক বাটন প্রিভেন্ট করা
-window.addEventListener('pageshow', function(event) {
-    if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-        window.location.reload();
+        `;
     }
-});
-    </script>
+
+    // ব্যাক বাটন প্রিভেন্ট করা
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+            window.location.reload();
+        }
+    });
+</script>
 </body>
 </html>

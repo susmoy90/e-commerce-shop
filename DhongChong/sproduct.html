@@ -49,8 +49,28 @@
             <i id="bar" class="fas fa-outdent"></i>
         </div>
     </section>
+
+<div id="videoModal">
+    <div class="modal-content">
+        <span id="closeBtn"><i class="fa-solid fa-xmark"></i></span>
+        
+        <div class="video-responsive-container">
+            <video id="orderVideo" controls playsinline>
+                <source src="assets/how-to-order.mp4" type="video/mp4">
+                আপনার ব্রাউজার ভিডিওটি সাপোর্ট করছে না।
+            </video>
+        </div>
+    </div>
+</div>
+
         
 <section class="pro-wrapper">
+    <div class="btn-container">
+        <button id="guideBtn">
+            <i class="fa-solid fa-circle-play"></i> 
+            <span>যেভাবে প্রোডাক্ট অর্ডার করবেন</span>
+        </button>
+    </div>
     <div id="prodetails" class="section-p1">
         <div class="single-pro-image">
             <div id="img-zoom-container" class="zoom-container">
@@ -219,6 +239,34 @@
                 }
             }
         });
+
+
+    const modal = document.getElementById("videoModal");
+    const btn = document.getElementById("guideBtn");
+    const span = document.getElementById("closeBtn");
+    const video = document.getElementById("orderVideo");
+
+    // বাটন ক্লিক করলে পপ-আপ আসবে এবং ভিডিও প্লে হবে
+    btn.onclick = function() {
+        modal.style.display = "flex";
+        video.play();
+    }
+
+    // ক্লোজ করলে ভিডিও পজ হবে এবং পপ-আপ চলে যাবে
+    span.onclick = function() {
+        modal.style.display = "none";
+        video.pause();
+        video.currentTime = 0; // ভিডিও একদম শুরুতে চলে যাবে
+    }
+
+    // বাইরে ক্লিক করলেও বন্ধ হবে
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            video.pause();
+            video.currentTime = 0;
+        }
+    }
     </script>
 </body>
 </html>

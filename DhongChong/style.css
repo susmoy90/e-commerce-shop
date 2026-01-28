@@ -659,7 +659,124 @@ button:disabled {
 }
 
                                                                                 /*product quick view design*/
-/* --- home page quick view design ডিজাইন পায় --- */
+/* বাটন কন্টেইনার */
+.pro-wrapper .btn-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 20px; 
+    margin-top: -40px; 
+    margin-bottom: 10px;
+}
+
+#guideBtn {
+    background: linear-gradient(135deg, #9900ff, #7a00cc);
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: slideInRight 1.2s ease-out;
+    box-shadow: 0 4px 12px rgba(153, 0, 255, 0.2);
+}
+
+#guideBtn:hover {
+    background: #ffffff;
+    color: #9900ff;
+    box-shadow: 0 0 0 2px #9900ff;
+    transform: scale(1.05);
+}
+
+#guideBtn i {
+    font-size: 22px;
+    transition: all 0.6s ease;
+    display: inline-block; 
+}
+
+#guideBtn:hover i {
+    color: #ff0000;
+    transform: rotate(360deg);
+}
+
+/* Modal স্টাইল - ফিক্সড */
+#videoModal {
+    display: none;
+    position: fixed;
+    z-index: 999999;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    position: relative; /* এটি বাটনকে ফ্রেমের সাপেক্ষে পজিশন করবে */
+    width: 100%;
+    max-width: 900px;
+    background: #b4b2b2;
+    border-radius: 15px;
+    box-shadow: 0 0 50px rgba(153, 0, 255, 0.4);
+    /* overflow: hidden; কখনোই দেবেন না, দিলে বাটন কেটে যাবে */
+}
+
+.video-responsive-container {
+    position: relative;
+    height: 70vh; /* স্ক্রিনের উচ্চতার ৮০% এর বেশি বড় হবে না */
+    width: 100%;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+#orderVideo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 15px;
+    z-index: 1; /* ভিডিওর লেয়ার নিচে থাকবে */
+}
+
+/* ক্লোজ বাটন - একদম ফিক্সড এবং প্রিমিয়াম লুক */
+#closeBtn {
+    position: absolute;
+    top: 5px; /* ফ্রেমের বাইরে উপরে ভাসবে */
+    right: 10px; /* ফ্রেমের বাইরে ডানে ভাসবে */
+    background: #ff0000;
+    color: #f0f0f0 !important;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10; /* ভিডিওর ওপরে থাকা নিশ্চিত করতে */
+    border: 2px solid #fff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
+}
+
+#closeBtn:hover {
+    transform: rotate(90deg) scale(1.1);
+    background: #fff;
+    color: #ff0000 !important;
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(100px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+
+                                                                                /* --- home page quick view design ডিজাইন পায় --- */
 
 #quickview-modal.modal {
     display: none; 
@@ -675,7 +792,7 @@ button:disabled {
     background-color: #fff;
     margin: 5% auto;
     width: 85%;
-    max-width: 950px;
+    max-width: 500px;
     border-radius: 25px;
     overflow: hidden;
     box-shadow: 0 25px 50px rgba(0,0,0,0.3);
